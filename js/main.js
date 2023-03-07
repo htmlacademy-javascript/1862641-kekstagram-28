@@ -47,3 +47,5 @@ const createPosts = () => ({
 });
 
 const create = () => Array.from ({length: IMG_COUNT}, createPosts);
+// eslint-disable-next-line no-console
+console.log(create);
