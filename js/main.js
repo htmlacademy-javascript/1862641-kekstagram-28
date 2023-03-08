@@ -25,10 +25,10 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-let commemt = 1;
-let post = 1;
+let commemtId = 1;
+let postId = 1;
 const createCommemt = () => ({
-  id: commemt++,
+  id: commemtId,
   avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
   message: Array.from(
     new Set (
@@ -39,13 +39,14 @@ const createCommemt = () => ({
 });
 
 const createPosts = () => ({
-  id: post++,
-  url: 'photos/$({post++}).jpg',
+  id: postId,
+  url: `photos/${postId++}.jpg`,
   desription:DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length - 1)],
   likes: getRandomInteger (LIKE_MIN, LIKE_MAX),
   commemts: Array.from({length:getRandomInteger(1,COMMENT_MESSEAGE.length - 1)}, createCommemt)
+
 });
 
 const create = () => Array.from ({length: IMG_COUNT}, createPosts);
-// eslint-disable-next-line no-console
-console.log(create);
+create();
+console.log(create());
