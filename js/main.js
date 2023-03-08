@@ -27,9 +27,8 @@ const getRandomInteger = (a, b) => {
 
 let commemtId = 1;
 let postId = 1;
-
 const createCommemt = () => ({
-  id: commemtId,
+  id: commemtId++,
   avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
   message: Array.from(
     new Set (
@@ -45,7 +44,6 @@ const createPosts = () => ({
   desription:DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length - 1)],
   likes: getRandomInteger (LIKE_MIN, LIKE_MAX),
   commemts: Array.from({length:getRandomInteger(1,COMMENT_MESSEAGE.length - 1)}, createCommemt)
-
 });
 
 const create = () => Array.from ({length: IMG_COUNT}, createPosts);
