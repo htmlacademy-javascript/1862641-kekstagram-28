@@ -1,4 +1,4 @@
-import { getRandomInteger } from './util';
+import { getRandomInteger } from './util.js';
 const IMG_COUNT = 25;
 const LIKE_MIN = 15;
 const LIKE_MAX = 200;
@@ -41,5 +41,4 @@ const createPosts = () => ({
 });
 
 const create = () => Array.from ({length: IMG_COUNT}, createPosts);
-create();
 export {create};
