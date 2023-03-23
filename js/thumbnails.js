@@ -24,3 +24,5 @@ const createPhoto = () => {
 
 };
 createPhoto ();
+
+export {createPhoto};
