@@ -2,6 +2,7 @@ import { isEscapeKey } from './util.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
+const body = document.querySelector('body');
 
 const createCommemtItem = (comment) => {
   const newComment = document.createElement('li');
@@ -24,6 +25,7 @@ const createCommemtItem = (comment) => {
 const createBigPicture = (photos) => {
   const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
   const bigPictureLikes = bigPicture.querySelector('.likes-count');
+  const captionPhoto = document.querySelector('.social__caption');
   const bigPictureComments = bigPicture.querySelector('.comments-count');
   const commentsList = bigPicture.querySelector('.social__comments');
 
@@ -32,6 +34,7 @@ const createBigPicture = (photos) => {
     commentsList.appendChild(itemComment);
   }
   bigPictureImg.src = photos.url;
+  captionPhoto.textContent = photos.desription;
   bigPictureLikes.textContent = photos.likes;
   bigPictureComments.textContent = photos.commemts.length;
 };
@@ -43,6 +46,7 @@ const showModal = (item, photo) => {
   item.addEventListener('click', (evt) => {
     evt.preventDefault();
     createBigPicture(photo);
+    body.classList.add('modal-open');
     bigPicture.classList.remove('hidden');
     document.addEventListener('keydown', onDocumentKeydown);
   });
@@ -53,6 +57,7 @@ const showModal = (item, photo) => {
 
 const close = () => {
   bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 
 };
