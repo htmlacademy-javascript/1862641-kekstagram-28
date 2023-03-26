@@ -16,7 +16,9 @@ const DESCRIPTIONS = [
   'Наша поезда на море',
   'Флексим в лесу',
   'Просто случаеное фото (нет)',
-  'Немного безумия'
+  'Немного безумия',
+  'Мы тут были',
+  'Просто фото'
 ];
 
 let commemtId = 1;
@@ -41,5 +43,4 @@ const createPosts = () => ({
 });
 
 const create = () => Array.from ({length: IMG_COUNT}, createPosts);
-
 export {create};
