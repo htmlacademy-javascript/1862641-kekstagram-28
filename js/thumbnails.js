@@ -1,14 +1,13 @@
-import { create } from './data.js';
-
+import {showModal} from './modal.js';
 const picture = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
 const newItem = pictureTemplate.querySelector('.picture');
 
 //создаем новый элемент
 
-const createPhoto = () => {
-  const photos = create();
-  const fragment = document.createDocumentFragment();
+const createPhotos = (photos) => {
+  const arrayPhotos = [];
+
   for (let i = 0; i < photos.length ; i++) {
 
     const item = newItem.cloneNode(true);
@@ -18,9 +17,21 @@ const createPhoto = () => {
     likeCount.textContent = photos[i].likes;
     commentCount.textContent = photos[i].commemts.length;
     img.src = photos[i].url;
-    fragment.appendChild(item);
+    showModal(item, photos[i]);
+    arrayPhotos.push(item);
+  }
+
+  return arrayPhotos;
+
+};
+
+const appendsPhoto = (items) => {
+  const fragment = document.createDocumentFragment();
+  for (let i = 0; i < items.length; i++) {
+    fragment.appendChild(items[i]);
   }
   picture.appendChild(fragment);
 
 };
-createPhoto ();
+
+export {createPhotos, appendsPhoto};
