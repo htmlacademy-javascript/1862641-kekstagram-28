@@ -3,6 +3,7 @@ import { isEscapeKey } from './util.js';
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
 const body = document.querySelector('body');
+let currentCommentIndex = 0;
 
 const createCommemtItem = (comment) => {
   const newComment = document.createElement('li');
@@ -19,7 +20,41 @@ const createCommemtItem = (comment) => {
   newComment.appendChild(commentAvatar);
   newComment.appendChild(commentText);
 
+
   return newComment;
+
+};
+
+const addComentsToDom = (from, to, comments) => {
+  const commentsList = bigPicture.querySelector('.social__comments');
+  let lastComment;
+
+  if(from > comments.length - 1) {
+
+    return;
+  }
+
+  if (to > comments.length - 1) {
+    lastComment = comments.length;
+  } else {
+    lastComment = to;
+  }
+
+  currentCommentIndex = lastComment;
+
+  for (let i = from; i < lastComment; i++) {
+    const itemComment = createCommemtItem(comments[i]);
+    commentsList.appendChild(itemComment);
+  }
+};
+
+const showMoreComment = (comment) => {
+  const showCommentButton = document.querySelector('.comments-loader');
+  const addedCommentCount = 5;
+
+  showCommentButton.addEventListener('click', () => {
+    addComentsToDom(currentCommentIndex, currentCommentIndex + addedCommentCount, comment);
+  });
 };
 
 const createBigPicture = (photos) => {
@@ -27,16 +62,14 @@ const createBigPicture = (photos) => {
   const bigPictureLikes = bigPicture.querySelector('.likes-count');
   const captionPhoto = document.querySelector('.social__caption');
   const bigPictureComments = bigPicture.querySelector('.comments-count');
-  const commentsList = bigPicture.querySelector('.social__comments');
 
-  for (let i = 0; i < photos.commemts.length; i++) {
-    const itemComment = createCommemtItem(photos.commemts[i]);
-    commentsList.appendChild(itemComment);
-  }
+  addComentsToDom(0, 5, photos.commemts);
+  showMoreComment(photos.commemts);
   bigPictureImg.src = photos.url;
   captionPhoto.textContent = photos.desription;
   bigPictureLikes.textContent = photos.likes;
   bigPictureComments.textContent = photos.commemts.length;
+
 };
 
 // показать модальное окно
@@ -56,14 +89,16 @@ const showModal = (item, photo) => {
 //закрываеm модальное окно
 
 const close = () => {
+  const socialComments = document.querySelectorAll('.social__comment');
+
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-
-};
-
-const closeModal = () => {
-  bigPictureClose.addEventListener('click', close);
+  document.removeEventListener('click', close);
+  for (const socialComment of socialComments) {
+    socialComment.remove();
+  }
+  currentCommentIndex = 0;
 };
 
 //закрываем модальное окно с клавиатуры
@@ -75,4 +110,9 @@ function onDocumentKeydown (evt) {
   }
 }
 
-export {showModal, closeModal};
+const init = () => {
+  bigPictureClose.addEventListener('click', close);
+
+};
+
+export {showModal, init};
