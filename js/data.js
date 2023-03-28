@@ -39,7 +39,7 @@ const createPosts = () => ({
   url: `photos/${postId++}.jpg`,
   desription:DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length - 1)],
   likes: getRandomInteger (LIKE_MIN, LIKE_MAX),
-  commemts: Array.from({length:getRandomInteger(1,COMMENT_MESSEAGE.length - 1)}, createCommemt)
+  commemts: Array.from({length:getRandomInteger(5,30)}, createCommemt)
 });
 
 const create = () => Array.from ({length: IMG_COUNT}, createPosts);
