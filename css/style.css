@@ -393,6 +393,11 @@ main {
   margin-bottom: 30px;
 }
 
+.form__error {
+  display: block;
+  padding-bottom: 15px;
+}
+
 
 /**
  * Кнопки изменения масштаба изобраения
