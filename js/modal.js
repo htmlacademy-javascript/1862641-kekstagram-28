@@ -1,5 +1,6 @@
 import { isEscapeKey } from './util.js';
 
+
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
 const body = document.querySelector('body');
