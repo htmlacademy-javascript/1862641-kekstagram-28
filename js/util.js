@@ -8,4 +8,8 @@ const getRandomInteger = (a, b) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, isEscapeKey};
+const shuffle = (array) => {
+  array.sort(() => Math.random() - 0.5);
+};
+
+export {getRandomInteger, isEscapeKey, shuffle};
