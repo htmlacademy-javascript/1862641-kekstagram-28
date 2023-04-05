@@ -1,6 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { reset } from './scale.js';
 import {resetEffects} from './effects.js';
+import { getErrorMessage, getSuccessMessage } from './succses-error-window.js';
 
 const uploadFile = document.querySelector('#upload-file');
 const formUpload = document.querySelector('.img-upload__overlay');
@@ -17,13 +18,20 @@ const pristine = new Pristine(imgForm, {
   errorTextClass: 'form__error',
 });
 
+const blockSubmitButton = () => {
+  formSubmit.disabled = true;
+};
+
+const unblockSubmitButton = () => {
+  formSubmit.disabled = false;
+};
+
 const getHastags = (value) => value.trim().split(/\s+/);
 
 pristine.addValidator(hashtagInput, (value) =>{
   const hashtags = getHastags(value);
 
   if(hashtags.length > 5) {
-    formSubmit.addAttribute('disabled');
     return false;
   }
   return true;
@@ -34,10 +42,11 @@ pristine.addValidator(hashtagInput, (value) =>{
 
   for(const hashtag of hashtags) {
     if(hashtag[0] !== '#'){
+      blockSubmitButton();
       return false;
     }
   }
-
+  unblockSubmitButton();
   return true;
 }, 'Хештег должен содержать #', 2, false);
 
@@ -47,10 +56,11 @@ pristine.addValidator(hashtagInput, (value) =>{
 
   for(const hashtag of hashtags) {
     if(!hashtagRegax.test(hashtag)){
+      blockSubmitButton();
       return false;
     }
   }
-
+  unblockSubmitButton();
   return true;
 }, 'Некоректная запись', 2, false);
 
@@ -66,11 +76,12 @@ pristine.addValidator(hashtagInput, (value) =>{
       }
 
       if (hashtags[j] === hashtags[i]) {
+        blockSubmitButton();
         return false;
       }
     }
   }
-
+  unblockSubmitButton();
   return true;
 }, 'Хештеги не должны повторяться', 2, false);
 
@@ -82,11 +93,29 @@ const onDocumentKeydown = (evt) => {
 };
 
 imgForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
   const valid = pristine.validate();
-  if(!valid) {
-    evt.preventDefault();
+  if(valid) {
+    const formData = new FormData(evt.target);
+    fetch(
+      'https://28.javascript.pages.academy/kekstagram', {
+        method: 'POST',
+        body: formData,
+
+      },)
+
+      .then((response) => {
+        if(response.ok) {
+          getSuccessMessage();
+          closePhotoEditor();
+        } else {
+          getErrorMessage();
+        }
+      });
   }
 });
+
 
 const deleteKeydownFocus = (value) => {
   value.addEventListener('focus', () =>{
