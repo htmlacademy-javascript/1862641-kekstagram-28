@@ -1,4 +1,6 @@
 import { isEscapeKey } from './util.js';
+import { reset } from './scale.js';
+import {resetEffects} from './effects.js';
 
 const uploadFile = document.querySelector('#upload-file');
 const formUpload = document.querySelector('.img-upload__overlay');
@@ -97,6 +99,7 @@ const deleteKeydownFocus = (value) => {
 };
 
 const showPhotoEditor = () => {
+
   formUpload.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
@@ -109,7 +112,8 @@ uploadFile.addEventListener('change', showPhotoEditor);
 
 
 function closePhotoEditor (){
-
+  reset();
+  resetEffects();
   formUpload.classList.add('hidden');
   document.body.classList.remove('modal-open');
   imgForm.reset();
