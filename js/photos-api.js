@@ -1,4 +1,3 @@
-import {createPhotos, appendsPhoto} from './thumbnails.js';
 import {errorMessage} from './data-error.js';
 const getData = (body) => fetch (
 
@@ -9,12 +8,7 @@ const getData = (body) => fetch (
   })
 
   .then((response) => response.json())
-  .then((data) => {
-    const photosView = createPhotos(data);
-    appendsPhoto(photosView);
-  })
   .catch(() => {
     errorMessage('Ошибка!Повторите еще раз!');
   });
-
 export {getData};

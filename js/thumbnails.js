@@ -1,10 +1,9 @@
 import {showModal} from './modal.js';
-import {shuffle} from './util.js';
 
 const picture = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
 const newItem = pictureTemplate.querySelector('.picture');
-
+const fragment = document.createDocumentFragment();
 //создаем новый элемент
 
 const createPhotos = (photos) => {
@@ -21,13 +20,11 @@ const createPhotos = (photos) => {
     showModal(item, photos[i]);
     arrayPhotos.push(item);
   }
-  shuffle(arrayPhotos);
   return arrayPhotos;
 
 };
 
 const appendsPhoto = (items) => {
-  const fragment = document.createDocumentFragment();
   for (let i = 0; i < items.length; i++) {
     fragment.appendChild(items[i]);
   }
@@ -35,4 +32,11 @@ const appendsPhoto = (items) => {
 
 };
 
-export {createPhotos, appendsPhoto};
+const clearPhotos = () => {
+  const pictureLinks = document.querySelectorAll('.picture');
+  for (const pictureLink of pictureLinks) {
+    pictureLink.remove();
+  }
+};
+
+export {createPhotos, appendsPhoto, clearPhotos};

@@ -99,9 +99,7 @@ sliderElement.noUiSlider.on('update', () => {
     filterValue = `blur(${sliderValue}px)`;
   } else if (activeEffect === 'heat') {
     filterValue = `brightness(${sliderValue})`;
-  }
-
-  if (activeEffect !== 'none') {
+  }else if (activeEffect !== 'none') {
     userImg.setAttribute('style', `filter: ${filterValue}`);
   }
 });
