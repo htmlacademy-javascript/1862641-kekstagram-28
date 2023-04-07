@@ -1,6 +1,6 @@
 import { getData } from './photos-api.js';
 import {createPhotos, appendsPhoto, clearPhotos} from './thumbnails.js';
-import {shuffle} from './util.js';
+import {shuffle, debounce} from './util.js';
 import {changeActiceButton} from './button-sort.js';
 import './form.js';
 import './scale.js';
@@ -14,18 +14,19 @@ const filterPopular = document.querySelector('#filter-discussed');
 
 changeActiceButton();
 
-getData().then((data) => {
+const createGallery = (data) => {
+  const photosView = createPhotos(data);
+  appendsPhoto(photosView);
+};
 
-  const createGallery = (data) => {
-    const photosView = createPhotos(data);
-    appendsPhoto(photosView);
-  };
+getData().then((data) => {
 
   createGallery(data);
 
   filterDefault.addEventListener('click', () => {
     clearPhotos();
-    createGallery(data);
+    debounce(createGallery(data), 500);
+
   });
 
   filterRandom.addEventListener('click', () => {
@@ -33,7 +34,7 @@ getData().then((data) => {
     const photos = data.slice();
     shuffle(photos);
     const slizedData = photos.slice(0, 10);
-    createGallery(slizedData);
+    debounce(createGallery(slizedData), 500);
   });
 
   filterPopular.addEventListener('click', () => {
@@ -42,7 +43,8 @@ getData().then((data) => {
     photos.sort((a, b)=>
       b.comments.length - a.comments.length
     );
-    createGallery(photos);
+    debounce(createGallery(photos), 500);
+
   });
 });
 
