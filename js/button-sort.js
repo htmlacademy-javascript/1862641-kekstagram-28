@@ -8,4 +8,6 @@ const changeActiceButton = () => {
     e.target.classList.add('img-filters__button--active');
   };
 };
+
+
 export {changeActiceButton};
