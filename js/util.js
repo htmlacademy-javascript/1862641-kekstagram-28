@@ -8,4 +8,16 @@ const getRandomInteger = (a, b) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, isEscapeKey};
+const shuffle = (array) => {
+  array.sort(() => Math.random() - 0.5);
+};
+
+function debounce(callback, delay) {
+  let timeout;
+  return function() {
+    clearTimeout(timeout);
+    timeout = setTimeout(callback, delay);
+  };
+}
+
+export {getRandomInteger, isEscapeKey, shuffle, debounce};

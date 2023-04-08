@@ -57,9 +57,9 @@ const createBigPicture = (photos) => {
   const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
   const bigPictureLikes = bigPicture.querySelector('.likes-count');
   const captionPhoto = document.querySelector('.social__caption');
-  addComentsToDom(0, 5, photos.commemts);
+  addComentsToDom(0, 5, photos.comments);
   bigPictureImg.src = photos.url;
-  captionPhoto.textContent = photos.desription;
+  captionPhoto.textContent = photos.description;
   bigPictureLikes.textContent = photos.likes;
 
 };
@@ -74,7 +74,7 @@ const showModal = (item, photo) => {
     const showMoreComment = () => {
 
       const addedCommentCount = 5;
-      addComentsToDom(currentCommentIndex, currentCommentIndex + addedCommentCount, photo.commemts);
+      addComentsToDom(currentCommentIndex, currentCommentIndex + addedCommentCount, photo.comments);
 
     };
 
@@ -108,5 +108,6 @@ const showModal = (item, photo) => {
   });
 
 };
+
 
 export {showModal};
