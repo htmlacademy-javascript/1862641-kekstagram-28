@@ -12,13 +12,16 @@ const createGallery = (data) => {
   appendsPhoto(photosView);
 };
 
+
+const createGalleryDebounce = (data, timeout) => debounce(createGallery(data), timeout);
+
 getData().then((data) => {
 
-  debounce(createGallery(data), TIME_OUT);
+  createGallery(data);
 
   filterDefault.addEventListener('click', () => {
     clearPhotos();
-    debounce(createGallery(data), TIME_OUT);
+    createGalleryDebounce(data, TIME_OUT);
   });
 
   filterRandom.addEventListener('click', () => {
@@ -26,7 +29,8 @@ getData().then((data) => {
     const photos = data.slice();
     shuffle(photos);
     const slizedData = photos.slice(0, 10);
-    debounce(createGallery(slizedData), TIME_OUT);
+    createGalleryDebounce(slizedData, TIME_OUT);
+
   });
 
   filterPopular.addEventListener('click', () => {
@@ -35,7 +39,6 @@ getData().then((data) => {
     photos.sort((a, b)=>
       b.comments.length - a.comments.length
     );
-    debounce(createGallery(photos), TIME_OUT);
-
+    createGalleryDebounce(photos, TIME_OUT);
   });
 });
