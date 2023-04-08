@@ -8,6 +8,7 @@ import './user-photo.js';
 import './effects.js';
 import './succses-error-window.js';
 
+const TIME_OUT = 500;
 const filterDefault = document.querySelector('#filter-default');
 const filterRandom = document.querySelector('#filter-random');
 const filterPopular = document.querySelector('#filter-discussed');
@@ -21,12 +22,11 @@ const createGallery = (data) => {
 
 getData().then((data) => {
 
-  createGallery(data);
+  debounce(createGallery(data), TIME_OUT);
 
   filterDefault.addEventListener('click', () => {
     clearPhotos();
-    debounce(createGallery(data), 500);
-
+    debounce(createGallery(data), TIME_OUT);
   });
 
   filterRandom.addEventListener('click', () => {
@@ -34,7 +34,7 @@ getData().then((data) => {
     const photos = data.slice();
     shuffle(photos);
     const slizedData = photos.slice(0, 10);
-    debounce(createGallery(slizedData), 500);
+    debounce(createGallery(slizedData), TIME_OUT);
   });
 
   filterPopular.addEventListener('click', () => {
@@ -43,7 +43,7 @@ getData().then((data) => {
     photos.sort((a, b)=>
       b.comments.length - a.comments.length
     );
-    debounce(createGallery(photos), 500);
+    debounce(createGallery(photos), TIME_OUT);
 
   });
 });
