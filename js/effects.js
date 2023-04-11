@@ -4,7 +4,7 @@ const pictureEffects = document.querySelector('.img-upload__effects');
 const userImg = document.querySelector('.img-upload__preview img');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 let filterValue = '';
-let activeEffect = 'none';
+let activeEffect = '';
 
 const hideSlider = () => {
   sliderContainer.setAttribute('hidden', 'hidden');
@@ -102,6 +102,8 @@ sliderElement.noUiSlider.on('update', () => {
 
   if (activeEffect !== 'none') {
     userImg.setAttribute('style', `filter: ${filterValue}`);
+  } else {
+    userImg.removeAttribute('style', `filter: ${filterValue}`);
   }
 });
 
