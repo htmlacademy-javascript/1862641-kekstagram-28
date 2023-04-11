@@ -1,6 +1,6 @@
 const sortForm = document.querySelector('.img-filters__form');
 
-const changeActiceButton = () => {
+const changeActiveButton = () => {
   sortForm.onclick = function(e){
     for(let i = 0 ; i < sortForm.children.length; i++){
       sortForm.children[i].classList.remove('img-filters__button--active');
@@ -10,4 +10,4 @@ const changeActiceButton = () => {
 };
 
 
-export {changeActiceButton};
+export {changeActiveButton};

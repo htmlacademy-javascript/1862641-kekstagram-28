@@ -26,10 +26,10 @@ const unblockSubmitButton = () => {
   formSubmit.disabled = false;
 };
 
-const getHastags = (value) => value.trim().split(/\s+/);
+const getHashtags = (value) => value.trim().split(/\s+/);
 
 pristine.addValidator(hashtagInput, (value) =>{
-  const hashtags = getHastags(value);
+  const hashtags = getHashtags(value);
 
   if(hashtags.length > 5) {
     return false;
@@ -38,20 +38,11 @@ pristine.addValidator(hashtagInput, (value) =>{
 }, 'Хештегов не может быть больше 5', 2, false);
 
 pristine.addValidator(hashtagInput, (value) =>{
-  const hashtags = getHastags(value);
-
-  for(const hashtag of hashtags) {
-    if(hashtag[0] !== '#'){
-      blockSubmitButton();
-      return false;
-    }
+  const hashtags = getHashtags(value);
+  if(hashtags.length === 1 && !hashtags[0]) {
+    return true;
   }
-  unblockSubmitButton();
-  return true;
-}, 'Хештег должен содержать #', 2, false);
 
-pristine.addValidator(hashtagInput, (value) =>{
-  const hashtags = getHastags(value);
   const hashtagRegax = /^#[a-zа-яё0-9]{1,19}$/i;
 
   for(const hashtag of hashtags) {
@@ -65,7 +56,7 @@ pristine.addValidator(hashtagInput, (value) =>{
 }, 'Некоректная запись', 2, false);
 
 pristine.addValidator(hashtagInput, (value) =>{
-  const hashtags = getHastags(value);
+  const hashtags = getHashtags(value);
 
   for(let i = 0; i < hashtags.length; i++) {
 
@@ -147,6 +138,7 @@ function closePhotoEditor (){
   document.body.classList.remove('modal-open');
   imgForm.reset();
   document.removeEventListener('keydown', onDocumentKeydown);
+  pristine.reset();
 }
 
 closeButton.addEventListener('click',closePhotoEditor);
