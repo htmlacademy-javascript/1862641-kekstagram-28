@@ -7,11 +7,7 @@ let filterValue = '';
 let activeEffect = '';
 
 const hideSlider = () => {
-  sliderContainer.setAttribute('hidden', 'hidden');
-};
-
-const showSlider = () => {
-  sliderContainer.removeAttribute('hidden');
+  sliderContainer.hidden = true;
 };
 
 const updateSlider = (value) => {
@@ -111,11 +107,7 @@ const showPictureEffectSlider = (evt) => {
   const effect = evt.target.closest('input[type="radio"]').value;
   activeEffect = effect;
 
-  if (effect === 'none') {
-    hideSlider();
-  } else {
-    showSlider();
-  }
+  sliderContainer.hidden = effect === 'none';
 
   userImg.className = `effects__preview--${effect}`;
 
