@@ -13,7 +13,9 @@ const createGallery = (data) => {
 };
 
 
+
 const createGalleryDebounce = debounce(createGallery, TIME_OUT);
+
 
 getData().then((data) => {
 
@@ -21,7 +23,9 @@ getData().then((data) => {
 
   filterDefault.addEventListener('click', () => {
     clearPhotos();
+
     createGalleryDebounce(data);
+
   });
 
   filterRandom.addEventListener('click', () => {
@@ -30,6 +34,7 @@ getData().then((data) => {
     shuffle(photos);
     const slicedData = photos.slice(0, 10);
     createGalleryDebounce(slicedData);
+
   });
 
   filterPopular.addEventListener('click', () => {
@@ -39,6 +44,5 @@ getData().then((data) => {
       b.comments.length - a.comments.length
     );
     createGalleryDebounce(photos);
-
   });
 });
