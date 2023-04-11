@@ -1,4 +1,4 @@
-const errorMessage = (message) => {
+const createErrorMessage = (message) => {
   const documentFragment = document.createDocumentFragment();
   const errorsContainer = document.createElement('div');
   if (!document.querySelector('.error-container')) {
@@ -32,4 +32,4 @@ const errorMessage = (message) => {
   errorText.textContent = message;
 };
 
-export {errorMessage};
+export {createErrorMessage};

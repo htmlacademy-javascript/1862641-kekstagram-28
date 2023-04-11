@@ -1,11 +1,14 @@
 import { isEscapeKey } from './util.js';
 
-
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
 const body = document.querySelector('body');
 const commentCount = document.querySelector ('.social__comment-count');
 const showCommentButton = document.querySelector('.comments-loader');
+const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
+const bigPictureLikes = bigPicture.querySelector('.likes-count');
+const captionPhoto = document.querySelector('.social__caption');
+const commentsList = bigPicture.querySelector('.social__comments');
 
 let currentCommentIndex = 0;
 
@@ -28,8 +31,7 @@ const createCommemtItem = (comment) => {
 
 };
 
-const addComentsToDom = (from, to, comments) => {
-  const commentsList = bigPicture.querySelector('.social__comments');
+const addCommentsToDom = (from, to, comments) => {
   let lastComment;
 
   if(from > comments.length - 1) {
@@ -49,15 +51,12 @@ const addComentsToDom = (from, to, comments) => {
     const itemComment = createCommemtItem(comments[i]);
     commentsList.appendChild(itemComment);
   }
-  commentCount.innerHTML = `${currentCommentIndex} из <span class="comments-count">${comments.length}</span> комментариев`;
+  commentCount.textContent = `${currentCommentIndex} из ${comments.length} комментариев`;
 
 };
 
 const createBigPicture = (photos) => {
-  const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
-  const bigPictureLikes = bigPicture.querySelector('.likes-count');
-  const captionPhoto = document.querySelector('.social__caption');
-  addComentsToDom(0, 5, photos.comments);
+  addCommentsToDom(0, 5, photos.comments);
   bigPictureImg.src = photos.url;
   captionPhoto.textContent = photos.description;
   bigPictureLikes.textContent = photos.likes;
@@ -74,7 +73,7 @@ const showModal = (item, photo) => {
     const showMoreComment = () => {
 
       const addedCommentCount = 5;
-      addComentsToDom(currentCommentIndex, currentCommentIndex + addedCommentCount, photo.comments);
+      addCommentsToDom(currentCommentIndex, currentCommentIndex + addedCommentCount, photo.comments);
 
     };
 
