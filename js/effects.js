@@ -84,26 +84,36 @@ sliderElement.noUiSlider.on('update', () => {
   const sliderValue = sliderElement.noUiSlider.get();
   valueElement.value = sliderValue;
 
-  if (activeEffect === 'chrome') {
-    filterValue = `grayscale(${sliderValue})`;
-  } else if (activeEffect === 'sepia') {
-    filterValue = `sepia(${sliderValue})`;
-  } else if (activeEffect === 'marvin') {
-    filterValue = `invert(${sliderValue}%)`;
-  } else if (activeEffect === 'phobos') {
-    filterValue = `blur(${sliderValue}px)`;
-  } else if (activeEffect === 'heat') {
-    filterValue = `brightness(${sliderValue})`;
-  }
-
   if (activeEffect !== 'none') {
     userImg.setAttribute('style', `filter: ${filterValue}`);
   } else {
     userImg.removeAttribute('style', `filter: ${filterValue}`);
   }
+
+  switch (activeEffect) {
+    case 'chrome':
+      filterValue = `grayscale(${sliderValue})`;
+      break;
+    case 'sepia':
+      filterValue = `sepia(${sliderValue})`;
+      break;
+    case 'marvin':
+      filterValue = `invert(${sliderValue}%)`;
+      break;
+    case 'phobos':
+      filterValue = `blur(${sliderValue}px)`;
+      break;
+    case 'heat':
+      filterValue = `brightness(${sliderValue})`;
+      break;
+
+    default:
+      userImg.removeAttribute('style', `filter: ${filterValue}`);
+  }
+
 });
 
-const showPictureEffectSlider = (evt) => {
+const onEffectsPictureChange = (evt) => {
   const effect = evt.target.closest('input[type="radio"]').value;
   activeEffect = effect;
 
@@ -114,7 +124,7 @@ const showPictureEffectSlider = (evt) => {
   updateSlider(effect);
 };
 
-pictureEffects.addEventListener('change', showPictureEffectSlider);
+pictureEffects.addEventListener('change', onEffectsPictureChange);
 
 hideSlider();
 

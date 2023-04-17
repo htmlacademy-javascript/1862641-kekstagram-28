@@ -79,7 +79,7 @@ pristine.addValidator(hashtagInput, (value) =>{
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closePhotoEditor();
+    onButtonClick();
   }
 };
 
@@ -99,7 +99,7 @@ imgForm.addEventListener('submit', (evt) => {
       .then((response) => {
         if(response.ok) {
           getSuccessMessage();
-          closePhotoEditor();
+          onButtonClick();
         } else {
           getErrorMessage();
         }
@@ -118,7 +118,7 @@ const deleteKeydownFocus = (value) => {
   });
 };
 
-const showPhotoEditor = () => {
+const onUploadFileChange = () => {
 
   formUpload.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -128,10 +128,10 @@ const showPhotoEditor = () => {
 
 };
 
-uploadFile.addEventListener('change', showPhotoEditor);
+uploadFile.addEventListener('change', onUploadFileChange);
 
 
-function closePhotoEditor (){
+function onButtonClick (){
   reset();
   resetEffects();
   formUpload.classList.add('hidden');
@@ -141,5 +141,5 @@ function closePhotoEditor (){
   pristine.reset();
 }
 
-closeButton.addEventListener('click',closePhotoEditor);
+closeButton.addEventListener('click',onButtonClick);
 

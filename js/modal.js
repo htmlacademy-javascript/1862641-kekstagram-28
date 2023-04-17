@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
 
 const bigPicture = document.querySelector('.big-picture');
-const bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
+const bigPictureonModalClose = bigPicture.querySelector('.big-picture__cancel');
 const body = document.querySelector('body');
 const commentCount = document.querySelector ('.social__comment-count');
 const showCommentButton = document.querySelector('.comments-loader');
@@ -12,7 +12,7 @@ const commentsList = bigPicture.querySelector('.social__comments');
 
 let currentCommentIndex = 0;
 
-const createCommemtItem = (comment) => {
+const createCommentItem = (comment) => {
   const newComment = document.createElement('li');
   const commentAvatar = document.createElement('img');
   const commentText = document.createElement('p');
@@ -48,7 +48,7 @@ const addCommentsToDom = (from, to, comments) => {
   currentCommentIndex = lastComment;
 
   for (let i = from; i < lastComment; i++) {
-    const itemComment = createCommemtItem(comments[i]);
+    const itemComment = createCommentItem(comments[i]);
     commentsList.appendChild(itemComment);
   }
   commentCount.textContent = `${currentCommentIndex} из ${comments.length} комментариев`;
@@ -77,13 +77,13 @@ const showModal = (item, photo) => {
 
     };
 
-    const close = () => {
+    const onModalClose = () => {
       const socialComments = document.querySelectorAll('.social__comment');
       bigPicture.classList.add('hidden');
       body.classList.remove('modal-open');
       showCommentButton.removeEventListener('click', showMoreComment);
       document.removeEventListener('keydown', onDocumentKeydown);
-      document.removeEventListener('click', close);
+      document.removeEventListener('click', onModalClose);
       for (const socialComment of socialComments) {
         socialComment.remove();
       }
@@ -93,7 +93,7 @@ const showModal = (item, photo) => {
     function onDocumentKeydown (evt) {
       if(isEscapeKey(evt)) {
         bigPicture.classList.add('hidden');
-        close();
+        onModalClose();
       }
     }
 
@@ -102,7 +102,7 @@ const showModal = (item, photo) => {
     body.classList.add('modal-open');
     bigPicture.classList.remove('hidden');
     document.addEventListener('keydown', onDocumentKeydown);
-    bigPictureClose.addEventListener('click', close);
+    bigPictureonModalClose.addEventListener('click', onModalClose);
 
   });
 
