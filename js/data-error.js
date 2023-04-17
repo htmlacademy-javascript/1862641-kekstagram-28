@@ -1,3 +1,6 @@
+const mainTag = document.querySelector('main');
+
+
 const createErrorMessage = (message) => {
   const documentFragment = document.createDocumentFragment();
   const errorsContainer = document.createElement('div');
@@ -11,7 +14,6 @@ const createErrorMessage = (message) => {
       height: 100vh;
       display: block;
     `;
-    const mainTag = document.querySelector('main');
     mainTag.appendChild(errorsContainer);
   }
   const errorContainer = document.createElement('div');
